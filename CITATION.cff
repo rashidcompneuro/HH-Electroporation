@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "If you use this code, please cite it as below. The accompanying article is submitted to PLOS Computational Biology."
+title: "HHK model: Hodgkin-Huxley excitation coupled with electroporation"
+type: software
+license: MIT
+repository-code: "https://github.com/rashidcompneuro/HH-Electroporation-PLOSCB"
+url: "https://github.com/rashidcompneuro/HH-Electroporation-PLOSCB"
+authors:
+  - family-names: Faridi
+    given-names: Md Rashid Ali
+    affiliation: "Indian Institute of Technology Bombay"
+    email: alifaridirashid@gmail.com
+  - family-names: Manchanda
+    given-names: Rohit
+    affiliation: "Indian Institute of Technology Bombay"
+  - family-names: Thaokar
+    given-names: Rochish M.
+    affiliation: "Indian Institute of Technology Bombay"
+    email: rochish@iitb.ac.in
+keywords:
+  - Hodgkin-Huxley
+  - electroporation
+  - nanosecond pulsed electric fields
+  - computational neuroscience
+  - MATLAB

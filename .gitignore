@@ -1,0 +1,12 @@
+# macOS
+.DS_Store
+
+# MATLAB autosave / editor files
+*.asv
+*.m~
+*.mex*
+slprj/
+
+# Regenerated figures
+figures/*
+!figures/.gitkeep

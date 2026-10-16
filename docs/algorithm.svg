@@ -1,0 +1,224 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1815" width="800" height="1815" role="img" aria-labelledby="title desc">
+  <title id="title">How the HHK model runs</title>
+  <desc id="desc">Plain-language schematic of the HHK simulation: the cell as two membrane patches, the feedback between voltage, ion channels and pores, the four time phases of a run, what happens in each slice of the pulse and relaxation, the recovery phase, and the possible outcomes.</desc>
+  <style>
+    text { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; fill: #18212b; }
+    .h1 { font-size: 28px; font-weight: 700; }
+    .h2 { font-size: 19px; font-weight: 700; }
+    .num { font-size: 13px; font-weight: 700; fill: #2f5bd3; letter-spacing: 1px; }
+    .sub { font-size: 14px; fill: #5a6573; }
+    .lbl { font-size: 14px; font-weight: 700; }
+    .sm { font-size: 12px; }
+    .mut { fill: #5a6573; }
+    .tP { fill: #2f5bd3; } .tO { fill: #c4561a; } .tG { fill: #1f8a5b; } .tR { fill: #b4233b; }
+    .bg { fill: #ffffff; }
+    .panel { fill: #f6f7f9; stroke: #d5dbe2; stroke-width: 1; }
+    .box { fill: #ffffff; stroke: #c9d1da; stroke-width: 1.5; }
+    .bP { fill: #e3e9fb; stroke: #2f5bd3; stroke-width: 1.5; }
+    .bO { fill: #fbe8dc; stroke: #c4561a; stroke-width: 1.5; }
+    .bG { fill: #ddf1e7; stroke: #1f8a5b; stroke-width: 1.5; }
+    .bR { fill: #f8dfe4; stroke: #b4233b; stroke-width: 1.5; }
+    .ln { stroke: #5a6573; stroke-width: 1.6; fill: none; }
+    .lP { stroke: #2f5bd3; stroke-width: 2; fill: none; }
+    .lO { stroke: #c4561a; stroke-width: 2; fill: none; }
+    .lG { stroke: #1f8a5b; stroke-width: 2; fill: none; }
+    .lR { stroke: #b4233b; stroke-width: 2; fill: none; }
+    .dash { stroke-dasharray: 5 4; }
+    .fP { fill: #2f5bd3; } .fO { fill: #c4561a; } .fG { fill: #1f8a5b; } .fM { fill: #5a6573; } .fR { fill: #b4233b; }
+    .mem { fill: none; stroke: #18212b; stroke-width: 6; stroke-linecap: round; }
+  </style>
+  <defs>
+    <marker id="aM" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fM"/></marker>
+    <marker id="aP" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fP"/></marker>
+    <marker id="aO" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fO"/></marker>
+    <marker id="aG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fG"/></marker>
+    <marker id="aR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="fR"/></marker>
+  </defs>
+
+  <rect x="0" y="0" width="800" height="1815" class="bg"/>
+
+  <!-- Title -->
+  <text x="40" y="52" class="h1">How the HHK model runs</text>
+  <text x="40" y="80" class="sub">One short, strong electric pulse hits a nerve cell. Does it fire? Do pores open in its membrane? Does it survive?</text>
+
+  <!-- ================= 1. The cell ================= -->
+  <g transform="translate(20,105)">
+    <rect x="0" y="0" width="760" height="355" rx="12" class="panel"/>
+    <text x="20" y="30" class="num">1 · WHAT IS MODELLED</text>
+    <text x="20" y="54" class="h2">A cell seen as two patches of membrane</text>
+    <g transform="translate(0,62)">
+      <rect x="20" y="50" width="26" height="200" rx="4" class="bP"/>
+      <text x="33" y="157" text-anchor="middle" class="lbl tP" style="font-size:22px">+</text>
+      <rect x="714" y="50" width="26" height="200" rx="4" class="bP"/>
+      <text x="727" y="157" text-anchor="middle" class="lbl tP" style="font-size:22px">−</text>
+      <text x="33" y="270" text-anchor="middle" class="sm mut">electrode</text>
+      <text x="727" y="270" text-anchor="middle" class="sm mut">electrode</text>
+      <line x1="70" y1="30" x2="690" y2="30" class="lP" marker-end="url(#aP)"/>
+      <text x="380" y="20" text-anchor="middle" class="sm tP">electric field of the pulse: amplitude V_stim, duration t_p</text>
+      <path d="M200 70 Q160 150 200 230" class="mem"/>
+      <path d="M560 70 Q600 150 560 230" class="mem"/>
+      <line x1="200" y1="70" x2="560" y2="70" class="ln dash"/>
+      <line x1="200" y1="230" x2="560" y2="230" class="ln dash"/>
+      <path d="M230 150 h60 l10 -14 l20 28 l20 -28 l20 28 l20 -28 l20 28 l20 -28 l10 14 h60" class="ln"/>
+      <text x="380" y="122" text-anchor="middle" class="lbl">inside the cell (cytoplasm)</text>
+      <text x="380" y="192" text-anchor="middle" class="sm mut">resistance R sets the charging time RC (10 ns in the main text)</text>
+      <text x="140" y="60" text-anchor="middle" class="lbl">Side 1 · DP</text>
+      <text x="140" y="250" text-anchor="middle" class="sm mut">voltage pushed up</text>
+      <text x="620" y="60" text-anchor="middle" class="lbl">Side 2 · HP</text>
+      <text x="620" y="250" text-anchor="middle" class="sm mut">voltage pushed down</text>
+      <rect x="172" y="98" width="14" height="18" rx="3" class="fG"/>
+      <rect x="574" y="98" width="14" height="18" rx="3" class="fG"/>
+      <circle cx="178" cy="182" r="5" class="fO"/><circle cx="182" cy="200" r="3.5" class="fO"/>
+      <circle cx="582" cy="182" r="5" class="fO"/><circle cx="578" cy="200" r="3.5" class="fO"/>
+    </g>
+    <rect x="110" y="320" width="12" height="14" rx="3" class="fG"/>
+    <text x="128" y="332" class="sm">ion channels (Na⁺, K⁺, leak): make action potentials</text>
+    <circle cx="456" cy="327" r="5" class="fO"/>
+    <text x="468" y="332" class="sm">pores: holes torn by a strong voltage</text>
+  </g>
+
+  <!-- ================= 2. The loop ================= -->
+  <g transform="translate(20,480)">
+    <rect x="0" y="0" width="760" height="375" rx="12" class="panel"/>
+    <text x="20" y="30" class="num">2 · THE CORE IDEA</text>
+    <text x="20" y="54" class="h2">Voltage, channels and pores push on each other</text>
+    <text x="20" y="76" class="sub">All of these are updated together at every tiny time step.</text>
+    <g transform="translate(0,45)">
+      <rect x="20" y="130" width="140" height="64" rx="10" class="bP"/>
+      <text x="90" y="157" text-anchor="middle" class="lbl tP">Electric pulse</text>
+      <text x="90" y="178" text-anchor="middle" class="sm mut">V_stim for t_p</text>
+      <line x1="160" y1="162" x2="238" y2="162" class="ln" marker-end="url(#aM)"/>
+      <rect x="240" y="122" width="190" height="80" rx="10" class="box"/>
+      <text x="335" y="152" text-anchor="middle" class="lbl">Membrane voltage</text>
+      <text x="335" y="172" text-anchor="middle" class="sm mut">V1 (side 1), V2 (side 2)</text>
+      <text x="335" y="190" text-anchor="middle" class="sm mut">charges up with time RC</text>
+      <line x1="430" y1="140" x2="520" y2="80" class="lG" marker-end="url(#aG)"/>
+      <rect x="522" y="34" width="218" height="86" rx="10" class="bG"/>
+      <text x="631" y="62" text-anchor="middle" class="lbl tG">Ion channels open / close</text>
+      <text x="631" y="82" text-anchor="middle" class="sm mut">gates m, n, h</text>
+      <text x="631" y="100" text-anchor="middle" class="sm mut">→ action potentials (spikes)</text>
+      <path d="M630 120 C630 170 470 140 432 150" class="lG dash" marker-end="url(#aG)"/>
+      <text x="560" y="138" text-anchor="middle" class="sm tG">ion currents</text>
+      <line x1="430" y1="186" x2="520" y2="236" class="lO" marker-end="url(#aO)"/>
+      <rect x="522" y="200" width="218" height="104" rx="10" class="bO"/>
+      <text x="631" y="226" text-anchor="middle" class="lbl tO">Pores open and grow</text>
+      <text x="631" y="246" text-anchor="middle" class="sm mut">small pores: how many (N)</text>
+      <text x="631" y="264" text-anchor="middle" class="sm mut">large pores: how wide (radius r)</text>
+      <text x="631" y="284" text-anchor="middle" class="sm mut">→ leak conductance g_ep</text>
+      <path d="M522 280 C420 300 345 260 335 206" class="lO dash" marker-end="url(#aO)"/>
+      <text x="395" y="300" text-anchor="middle" class="sm tO">leak current pulls the voltage back</text>
+    </g>
+  </g>
+
+  <!-- ================= 3. Timeline ================= -->
+  <g transform="translate(20,875)">
+    <rect x="0" y="0" width="760" height="355" rx="12" class="panel"/>
+    <text x="20" y="30" class="num">3 · ONE RUN, IN TIME ORDER</text>
+    <text x="20" y="54" class="h2">Four phases, each solved with step sizes that suit it</text>
+    <g transform="translate(0,60)">
+      <text x="600" y="34" text-anchor="middle" class="sm tO">a pore closes → the solver stops, updates, continues</text>
+      <g class="fO"><path d="M540 64 l6 -10 l6 10 z"/><path d="M590 64 l6 -10 l6 10 z"/><path d="M660 64 l6 -10 l6 10 z"/></g>
+      <rect x="20" y="70" width="160" height="46" rx="6" class="box"/>
+      <rect x="180" y="70" width="150" height="46" class="bP"/>
+      <rect x="330" y="70" width="150" height="46" class="bP" style="fill-opacity:.55"/>
+      <rect x="480" y="70" width="260" height="46" rx="6" class="bG"/>
+      <g class="lP" style="stroke-width:1.4">
+        <line x1="195" y1="70" x2="195" y2="116"/><line x1="210" y1="70" x2="210" y2="116"/><line x1="225" y1="70" x2="225" y2="116"/><line x1="240" y1="70" x2="240" y2="116"/><line x1="255" y1="70" x2="255" y2="116"/><line x1="270" y1="70" x2="270" y2="116"/><line x1="285" y1="70" x2="285" y2="116"/><line x1="300" y1="70" x2="300" y2="116"/><line x1="315" y1="70" x2="315" y2="116"/>
+        <line x1="345" y1="70" x2="345" y2="116"/><line x1="360" y1="70" x2="360" y2="116"/><line x1="375" y1="70" x2="375" y2="116"/><line x1="390" y1="70" x2="390" y2="116"/><line x1="405" y1="70" x2="405" y2="116"/><line x1="420" y1="70" x2="420" y2="116"/><line x1="435" y1="70" x2="435" y2="116"/><line x1="450" y1="70" x2="450" y2="116"/><line x1="465" y1="70" x2="465" y2="116"/>
+      </g>
+      <text x="100" y="98" text-anchor="middle" class="lbl">1 · Rest</text>
+      <text x="610" y="98" text-anchor="middle" class="lbl tG">4 · Recovery</text>
+      <text x="255" y="60" text-anchor="middle" class="lbl tP">2 · Pulse on</text>
+      <text x="405" y="60" text-anchor="middle" class="lbl tP">3 · Charge settles</text>
+      <text x="20" y="138" class="sm mut">0 ms</text>
+      <text x="180" y="138" text-anchor="middle" class="sm mut">5 ms</text>
+      <text x="330" y="138" text-anchor="middle" class="sm mut">+ t_p</text>
+      <text x="480" y="138" text-anchor="middle" class="sm mut">+ RC</text>
+      <text x="740" y="138" text-anchor="end" class="sm mut">20 s</text>
+      <text x="100" y="170" text-anchor="middle" class="sm">cell at rest (−70 mV)</text>
+      <text x="100" y="188" text-anchor="middle" class="sm mut">no large pores yet</text>
+      <text x="255" y="170" text-anchor="middle" class="sm">voltage shoots up / down</text>
+      <text x="255" y="188" text-anchor="middle" class="sm mut">10 slices of t_p / 10</text>
+      <text x="405" y="170" text-anchor="middle" class="sm">pulse off, charge spreads</text>
+      <text x="405" y="188" text-anchor="middle" class="sm mut">10 slices of RC / 10</text>
+      <text x="610" y="170" text-anchor="middle" class="sm">spikes play out, pores shrink</text>
+      <text x="610" y="188" text-anchor="middle" class="sm mut">and close one by one (panel 5)</text>
+      <path d="M180 212 q0 10 10 10 h130 q10 0 15 10 q5 -10 15 -10 h120 q10 0 10 -10" class="lP"/>
+      <text x="330" y="252" text-anchor="middle" class="sm tP">after each of these 20 slices: count new large pores (panel 4)</text>
+      <text x="20" y="282" class="sm mut">Not to scale: for a 1 ns pulse on the main-text cell, phases 2 and 3 together last 11 ns out of 20 s.</text>
+    </g>
+  </g>
+
+  <!-- ================= 4. Each slice ================= -->
+  <g transform="translate(20,1250)">
+    <rect x="0" y="0" width="760" height="230" rx="12" class="panel"/>
+    <text x="20" y="30" class="num">4 · INSIDE EACH SLICE OF PHASES 2 AND 3</text>
+    <text x="20" y="54" class="h2">Solve, count new pores, check the limits</text>
+    <g transform="translate(0,72)">
+      <rect x="20" y="0" width="160" height="92" rx="10" class="box"/>
+      <text x="100" y="26" text-anchor="middle" class="lbl">Solve the slice</text>
+      <text x="100" y="46" text-anchor="middle" class="sm mut">voltage, gates,</text>
+      <text x="100" y="62" text-anchor="middle" class="sm mut">small pores N,</text>
+      <text x="100" y="78" text-anchor="middle" class="sm mut">radius of each group</text>
+      <line x1="180" y1="46" x2="208" y2="46" class="ln" marker-end="url(#aM)"/>
+      <rect x="210" y="0" width="170" height="92" rx="10" class="bO"/>
+      <text x="295" y="26" text-anchor="middle" class="lbl tO">Count new pores</text>
+      <text x="295" y="46" text-anchor="middle" class="sm mut">N × patch area ≥ 1 ?</text>
+      <text x="295" y="62" text-anchor="middle" class="sm mut">yes: launch a new group</text>
+      <text x="295" y="78" text-anchor="middle" class="sm mut">at 0.8 nm, reset N</text>
+      <line x1="380" y1="46" x2="408" y2="46" class="ln" marker-end="url(#aM)"/>
+      <rect x="410" y="0" width="160" height="92" rx="10" class="box"/>
+      <text x="490" y="26" text-anchor="middle" class="lbl">Check the limits</text>
+      <text x="490" y="46" text-anchor="middle" class="sm mut">pore area &gt; 1.26 %</text>
+      <text x="490" y="62" text-anchor="middle" class="sm mut">(supra-EP), or a pore</text>
+      <text x="490" y="78" text-anchor="middle" class="sm mut">&gt; 100 nm (IRE) ?</text>
+      <line x1="570" y1="30" x2="598" y2="30" class="lR" marker-end="url(#aR)"/>
+      <text x="584" y="22" text-anchor="middle" class="sm tR">yes</text>
+      <rect x="600" y="0" width="140" height="56" rx="10" class="bR"/>
+      <text x="670" y="24" text-anchor="middle" class="lbl tR">Stop</text>
+      <text x="670" y="42" text-anchor="middle" class="sm mut">cell death</text>
+      <path d="M490 92 v28 h-390 v-28" class="lP" marker-end="url(#aP)"/>
+      <text x="295" y="138" text-anchor="middle" class="sm tP">no: next slice (each launched group keeps its own radius equation)</text>
+    </g>
+  </g>
+
+  <!-- ================= 5. Recovery ================= -->
+  <g transform="translate(20,1500)">
+    <rect x="0" y="0" width="760" height="165" rx="12" class="panel"/>
+    <text x="20" y="30" class="num">5 · PHASE 4, THE LONG RECOVERY</text>
+    <text x="20" y="54" class="h2">Pores close one at a time</text>
+    <g transform="translate(0,68)">
+      <rect x="20" y="0" width="210" height="56" rx="10" class="bO"/>
+      <text x="125" y="23" text-anchor="middle" class="lbl tO">Solve forward until a</text>
+      <text x="125" y="42" text-anchor="middle" class="sm mut">pore shrinks below 0.83 nm</text>
+      <line x1="230" y1="28" x2="258" y2="28" class="ln" marker-end="url(#aM)"/>
+      <rect x="260" y="0" width="200" height="56" rx="10" class="box"/>
+      <text x="360" y="23" text-anchor="middle" class="lbl">Fold it back</text>
+      <text x="360" y="42" text-anchor="middle" class="sm mut">into the small-pore count</text>
+      <line x1="460" y1="28" x2="488" y2="28" class="ln" marker-end="url(#aM)"/>
+      <rect x="490" y="0" width="250" height="56" rx="10" class="bG"/>
+      <text x="615" y="23" text-anchor="middle" class="lbl tG">Repeat until all closed or 20 s</text>
+      <text x="615" y="42" text-anchor="middle" class="sm mut">then join phases 1–4 into one result</text>
+      <path d="M360 56 v18 h-235 v-16" class="lO dash" marker-end="url(#aO)"/>
+      <text x="242" y="88" text-anchor="middle" class="sm tO">next pore</text>
+    </g>
+  </g>
+
+  <!-- ================= 6. Outcomes ================= -->
+  <g transform="translate(20,1685)">
+    <rect x="0" y="0" width="760" height="112" rx="12" class="panel"/>
+    <text x="20" y="30" class="num">6 · WHAT YOU READ OFF THE RESULT</text>
+    <rect x="20" y="44" width="176" height="54" rx="10" class="bG"/>
+    <text x="108" y="66" text-anchor="middle" class="lbl tG">Excitation</text>
+    <text x="108" y="85" text-anchor="middle" class="sm mut">none · AP · spiking · block</text>
+    <rect x="202" y="44" width="176" height="54" rx="10" class="bO"/>
+    <text x="290" y="66" text-anchor="middle" class="lbl tO">Electroporation</text>
+    <text x="290" y="85" text-anchor="middle" class="sm mut">pores open, then reseal</text>
+    <rect x="384" y="44" width="176" height="54" rx="10" class="bR"/>
+    <text x="472" y="66" text-anchor="middle" class="lbl tR">Death: supra-EP</text>
+    <text x="472" y="85" text-anchor="middle" class="sm mut">pore area &gt; 1.26 % (Fig 8)</text>
+    <rect x="566" y="44" width="174" height="54" rx="10" class="bR"/>
+    <text x="653" y="66" text-anchor="middle" class="lbl tR">Death: IRE</text>
+    <text x="653" y="85" text-anchor="middle" class="sm mut">a pore &gt; 100 nm (Fig 9)</text>
+  </g>
+</svg>
