@@ -1,10 +1,15 @@
 # Dynamical Regimes of Excitable Cells under Pulsed Electric Fields: From Excitation to Electroporation
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23409120.svg)](https://doi.org/10.5281/zenodo.23409120)
+
 MATLAB code and data accompanying:
 
 > Md Rashid Ali Faridi, Rohit Manchanda, and Rochish M. Thaokar.
 > *Dynamical Regimes of Excitable Cells under Pulsed Electric Fields: From Excitation to Electroporation.*
 > Submitted to PLOS Computational Biology.
+
+Archived code and data: Zenodo, DOI [10.5281/zenodo.23409120](https://doi.org/10.5281/zenodo.23409120)
+(this DOI always points to the latest version).
 
 Department of Chemical Engineering and Department of Biosciences and Bioengineering,
 Indian Institute of Technology Bombay, Mumbai, India.
