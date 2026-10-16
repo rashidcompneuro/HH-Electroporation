@@ -290,4 +290,4 @@ If you use this code, please cite the paper above. Until it is published, cite t
 
 - Code and technical questions: Md Rashid Ali Faridi — alifaridirashid@gmail.com
   (or open an issue on GitHub: https://github.com/rashidcompneuro/HH-Electroporation-PLOSCB/issues)
-- Corresponding author: Rochish M. Thaokar — rochish@iitb.ac.in
+- Corresponding author: Rochish M. Thaokar — rochish@che.iitb.ac.in
