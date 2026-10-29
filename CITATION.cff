@@ -1,11 +1,11 @@
 cff-version: 1.2.0
-message: "If you use this code, please cite it as below. The accompanying article is submitted to PLOS Computational Biology."
+message: "If you use this code, please cite it as below. The accompanying article is under review."
 title: "HHK model: Hodgkin-Huxley excitation coupled with electroporation"
 type: software
 license: MIT
 doi: "10.5281/zenodo.23409120"
-repository-code: "https://github.com/rashidcompneuro/HH-Electroporation-PLOSCB"
-url: "https://github.com/rashidcompneuro/HH-Electroporation-PLOSCB"
+repository-code: "https://github.com/rashidcompneuro/HH-Electroporation"
+url: "https://github.com/rashidcompneuro/HH-Electroporation"
 authors:
   - family-names: Faridi
     given-names: Md Rashid Ali

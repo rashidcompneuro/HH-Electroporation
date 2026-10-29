@@ -6,7 +6,7 @@ MATLAB code and data accompanying:
 
 > Md Rashid Ali Faridi, Rohit Manchanda, and Rochish M. Thaokar.
 > *Dynamical Regimes of Excitable Cells under Pulsed Electric Fields: From Excitation to Electroporation.*
-> Submitted to PLOS Computational Biology.
+> Manuscript under review.
 
 Archived code and data: Zenodo, DOI [10.5281/zenodo.23409120](https://doi.org/10.5281/zenodo.23409120)
 (this DOI always points to the latest version).
@@ -294,5 +294,5 @@ If you use this code, please cite the paper above. Until it is published, cite t
 ## Contact
 
 - Code and technical questions: Md Rashid Ali Faridi — alifaridirashid@gmail.com
-  (or open an issue on GitHub: https://github.com/rashidcompneuro/HH-Electroporation-PLOSCB/issues)
+  (or open an issue on GitHub: https://github.com/rashidcompneuro/HH-Electroporation/issues)
 - Corresponding author: Rochish M. Thaokar — rochish@che.iitb.ac.in
